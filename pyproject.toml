@@ -1,0 +1,12 @@
+[project]
+name="gamestore"
+version="0.1.0"
+readme="README.md"
+dynamic = ["dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+
+[project.sripts]
+gamestore="gamestore.__main__:main"
