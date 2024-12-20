@@ -1,11 +1,14 @@
 from pydantic import BaseModel
 
-class Game(BaseModel):
-    id: int
+
+class CreateGame(BaseModel):
     title: str
     platform: str
     price: float
-    release_year = int
+    release_year: int
+
+class Game(CreateGame):
+    id: int
 
 
 class Order(BaseModel):
