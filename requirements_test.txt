@@ -2,4 +2,4 @@ pytest
 pytest-cov
 pytest-http
 httpx
-
+pytest-mock

@@ -2,3 +2,5 @@
 .idea
 *.egg-info
 *.pyc
+testresults
+.coverage

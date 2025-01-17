@@ -2,12 +2,21 @@
 name="gamestore"
 version="0.1.0"
 readme="README.md"
-dynamic = ["dependencies", "optional_dependencies"]
+dynamic = ["dependencies", "optional-dependencies"]
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
-optional_dependencies.test = {file = ["requirements_test.txt"]}
+optional-dependencies.test = {file = ["requirements_test.txt"]}
 
 
 [project.scripts]
 gamestore="gamestore.__main__:main"
+
+[tool.pytest.ini_options]
+log_level = "DEBUG"
+log_cli = true
+addopts = '''
+    -v
+    --cov=gamestore
+    --cov-report html:testresults/htmlcov
+    '''
