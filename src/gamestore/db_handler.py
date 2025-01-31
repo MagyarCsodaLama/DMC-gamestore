@@ -2,7 +2,7 @@ import logging
 import os
 import sqlite3
 
-from gamestore.models import Game
+from gamestore.models import Game, OrderGame, Order
 
 logger = logging.getLogger(__name__)
 
@@ -73,7 +73,7 @@ class DatabaseTable:
     def keys(self):
         with Cursor() as c:
             logger.debug('Getting keys')
-            c.execute(f"SELECT {self.id_field} FROM {self.table_name}")
+            c.execute(f"SELECT {self.id_field} FROM \"{self.table_name}\"")
             ids = [r[self.id_field] for r in c.fetchall()]
         return ids
 
@@ -116,3 +116,54 @@ game_table = DatabaseTable(
     """,
     delete_sql="delete from game where id = :id"
 )
+
+
+order_table = DatabaseTable(
+    table_name='order',
+    id_field='id',
+    object_model=Order,
+    create_sql="""
+        create table "order" (
+        id          int primary key not null,
+        customer    text not null,
+        status      text not null
+        )
+    """,
+    insert_sql="""
+        insert into "order" (id, customer, status)
+        values (:id, :customer, :status)
+    """,
+    update_sql="""
+        update "order"
+        set status = :status
+        where id = :id
+    """,
+    select_sql='select * from "order" where id=:id',
+    delete_sql='select * from "order" where id=:id'
+
+)
+
+
+order_game_table = DatabaseTable(
+    table_name='order_game',
+    id_field='id',
+    object_model=OrderGame,
+    create_sql="""
+        create table "order_game" (
+            id          int primary key not null,
+            order_id    int not null,
+            game_id     int not null
+        )
+    """,
+    insert_sql="""
+        insert into "order_game" (id, order_id, game_id)
+        values(:id, :order_id, :game_id)
+    """,
+    select_sql='',
+    update_sql='',
+    delete_sql=''
+)
+
+
+
+

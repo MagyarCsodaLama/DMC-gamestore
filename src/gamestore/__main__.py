@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 
 from gamestore.game_router import router as gr
+from gamestore.order_router import router as o_r
 
 
 logger = logging.getLogger(__name__)
@@ -20,6 +21,7 @@ app = FastAPI(
 
 
 app.include_router(gr)
+app.include_router(o_r)
 @app.get('/')
 def docs():
     return RedirectResponse(url='/docs')
